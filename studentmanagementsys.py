@@ -40,7 +40,19 @@ class Student:
         print(f"and the college she studies is {Student.college_name}")
         print(f"her class is in {Student.block_name}")
 
-    #noramal classethod
+
+    #STRETCH TASK of day 6
+
+    def get_summary(self):
+        return{
+            "name":self.sname,
+            "type":self.__class__.__name__,
+            "passed":self.is_passed()
+        }
+
+    
+
+    #normal classethod
     @classmethod
     def set_block_name(cls,newname):
         cls.block_name=newname
@@ -67,7 +79,7 @@ class Student:
    
     def is_passed(self):
         if  0<self.marks<=100:
-            return f"{self.sname} you have PASSED!!"
+            return True
 
 class UGStudent(Student):
     def __init__(self,sid,sname,address,marks,age,contact,semester,course):
@@ -78,9 +90,9 @@ class UGStudent(Student):
 #method overriding
     def is_passed(self):
         if self.marks >=40:
-            return f"{self.sname} you have PASSED!!!!!!"
+            return True
         else:
-            return f"{self.sname} you have FAILED!!! Try harder "
+            return False
 
 class PGStudent(Student):
     def __init__(self,sid,sname,address,marks,age,contact,thesis_tittle,supervisor):
@@ -91,9 +103,9 @@ class PGStudent(Student):
 #method overriding
     def is_passed(self):
         if self.marks >=40:
-            return f"{self.sname} you have PASSED!!!!!!"
+            return True
         else:
-            return f"{self.sname} you have FAILED!!! Try harder "
+            return False
 
 #UGStudent details
 ugstu=UGStudent(12,"susan","ilam",14,16,9807563421,"first-sem","Bsc-IT(cloud)")
@@ -110,11 +122,15 @@ print(pgstu.thesis_tittle)
 s1=Student(1,"aaakriti","maitidevi", 50,19,9808754)
 
 #creating a single  list of each 3 categories student
-student_list=[s1,ugstu,pgstu]
-print(student_list)
-for stulist in student_list:
-    print(stulist.is_passed())
+# student_list=[s1,ugstu,pgstu]
+# print(student_list)
+# for stulist in student_list:
+#     print(stulist.is_passed())
 
+#task 2 of day 6
+students=[s1, ugstu, pgstu]
+for s in students:
+    print(s.is_passed())
 
 
 
@@ -131,3 +147,10 @@ S3=Student.from_string(s3_str)
 print(S3)
 s4=Student.valid_contact(98076534361)#returns False here
 print(s4)
+
+def show_result(student):
+    print(f"{student.sname} : {student.is_passed()}")
+
+for s in students:
+    print(s.get_summary())
+
