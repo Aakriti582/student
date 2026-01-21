@@ -6,13 +6,13 @@ class Student:
         self.sid=sid
         self.sname=sname
         self.address=address
-        self.age=age
+        self._age=None
         self._marks=None
         self._contact=None
 
         self.marks=marks
         self.contact=contact
-
+        self.age=age
 
     @property
     def marks(self):
@@ -37,6 +37,18 @@ class Student:
                 self._contact=newcontact
             else:
                 raise ValueError("please enter a 10 digit number")
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self,newage):
+        if 10<=newage <=60:
+            self._age=newage
+
+        else:
+            raise ValueError("enter the age between 10 -60")
 
     #to display object clearly 
     def __str__(self):
@@ -81,7 +93,9 @@ class Student:
 stu=Student(1,"aakriti","maitidevi",19,80,9807657654)
 print(stu.marks)
 print(stu.contact)
-stu.marks=500
-print(stu.marks)#throws and error
+stu.age=60
+print(stu.age)
+# stu.marks=500
+# print(stu.marks)#throws and error
 
 
