@@ -2,16 +2,41 @@ class Student:
     college_name="LBEF-APU"
     block_name="D-Block"
 
-    total_students=0
-    def __init__(self,sid,sname,address,marks,age,contact):
+    def __init__(self,sid,sname,address,age,marks,contact):
         self.sid=sid
         self.sname=sname
         self.address=address
-        self.marks=marks
         self.age=age
+        self._marks=None
+        self._contact=None
+
+        self.marks=marks
         self.contact=contact
 
-        Student.total_students+=1
+
+    @property
+    def marks(self):
+        return self._marks
+
+    @marks.setter
+    def marks(self,newmarks):
+        if 0<=newmarks<=100:
+            self._marks=newmarks
+
+        else:
+            raise ValueError("enter valid marks (0-100)")
+
+    @property
+    def contact(self):
+        return self._contact
+
+    @contact.setter
+    def contact(self,newcontact):
+            newcontact=str(newcontact)
+            if len(newcontact)==10 and newcontact.isdigit():
+                self._contact=newcontact
+            else:
+                raise ValueError("please enter a 10 digit number")
 
     #to display object clearly 
     def __str__(self):
@@ -49,108 +74,14 @@ class Student:
             "type":self.__class__.__name__,
             "passed":self.is_passed()
         }
-
-    
-
-    #normal classethod
-    @classmethod
-    def set_block_name(cls,newname):
-        cls.block_name=newname
-
-    #classmethod as alternative constructor
-    @classmethod
-    def from_string(cls,data_str):
-        sid,sname,address,marks,age,contact=data_str.split(",")
-        return cls (int(sid),sname,address,int(marks),int(age),int(contact))
-    #static method to validate the contact n of student
-    @staticmethod
-    def valid_contact(contact):
-        try:
-            contact_int=int(contact)
-
-            contact_str=str(contact)
-            if len(contact_str)<=10:
-                return True
-            else:
-                return False
-        except(ValueError,TypeError):
-            return False
-            
-   
+ 
     def is_passed(self):
-        if  0<self.marks<=100:
-            return True
+       return self.marks >=40
 
-class UGStudent(Student):
-    def __init__(self,sid,sname,address,marks,age,contact,semester,course):
-        super().__init__(sid,sname,address,marks,age,contact)
-        self.semester=semester
-        self.course=course
+stu=Student(1,"aakriti","maitidevi",19,80,9807657654)
+print(stu.marks)
+print(stu.contact)
+stu.marks=500
+print(stu.marks)#throws and error
 
-#method overriding
-    def is_passed(self):
-        if self.marks >=40:
-            return True
-        else:
-            return False
-
-class PGStudent(Student):
-    def __init__(self,sid,sname,address,marks,age,contact,thesis_tittle,supervisor):
-        super().__init__(sid,sname,address,marks,age,contact)
-        self.thesis_tittle=thesis_tittle
-        self.supervisor=supervisor
-
-#method overriding
-    def is_passed(self):
-        if self.marks >=40:
-            return True
-        else:
-            return False
-
-#UGStudent details
-ugstu=UGStudent(12,"susan","ilam",14,16,9807563421,"first-sem","Bsc-IT(cloud)")
-print(ugstu.semester)
-print(ugstu.course)
-print()
-
-#PGStudentdetails
-pgstu=PGStudent(11,"khushi","kalanki",90,12,980765432,"history of nepal","Dr.RN Thakur")
-print(pgstu.supervisor)
-print(pgstu.thesis_tittle)
-
-#normal base class student instance
-s1=Student(1,"aaakriti","maitidevi", 50,19,9808754)
-
-#creating a single  list of each 3 categories student
-# student_list=[s1,ugstu,pgstu]
-# print(student_list)
-# for stulist in student_list:
-#     print(stulist.is_passed())
-
-#task 2 of day 6
-students=[s1, ugstu, pgstu]
-for s in students:
-    print(s.is_passed())
-
-
-
-s2=Student(2,"salina","ratopul",80,20,980764532)
-s1.display()
-Student.set_block_name("E-block")#changes the class variable block name of only salina fron D to E block
-print()
-s2.display()
-Student.set_block_name("E-block")
-print(f"the total no of students in {Student.college_name} is {Student.total_students}")
-s3_str="3,Monika,baneshwor,80,31,980765432"
-print()
-S3=Student.from_string(s3_str)
-print(S3)
-s4=Student.valid_contact(98076534361)#returns False here
-print(s4)
-
-def show_result(student):
-    print(f"{student.sname} : {student.is_passed()}")
-
-for s in students:
-    print(s.get_summary())
 
