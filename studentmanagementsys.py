@@ -1,3 +1,13 @@
+class InvalidAgeError(Exception):
+    def __init__(self,age):
+        self.age=age
+        super().__init__(age)
+
+class InvalidMarksError(Exception):
+    def __init__(self,marks):
+        self.marks=marks
+        super().__init__(marks)  
+
 class Student:
     college_name="LBEF-APU"
     block_name="D-Block"
@@ -24,7 +34,7 @@ class Student:
             self._marks=newmarks
 
         else:
-            raise ValueError("enter valid marks (0-100)")
+            raise InvalidMarksError(newmarks)
 
     @property
     def contact(self):
@@ -46,10 +56,8 @@ class Student:
     def age(self,newage):
         if 10<=newage <=60:
             self._age=newage
-
         else:
-            raise ValueError("enter the age between 10 -60")
-
+            raise InvalidAgeError(newage)
     #to display object clearly 
     def __str__(self):
         return(
@@ -90,12 +98,16 @@ class Student:
     def is_passed(self):
        return self.marks >=40
 
-stu=Student(1,"aakriti","maitidevi",19,80,9807657654)
-print(stu.marks)
-print(stu.contact)
-stu.age=60
-print(stu.age)
-# stu.marks=500
-# print(stu.marks)#throws and error
+try:
+    stu=Student(1,"aakriti","maitidevi",111,80,9807657654)
+   
+except InvalidAgeError as e:
+    print("Invalid age:",e)
+
+try:
+    stu=Student(2,"Khushi","ratopul",19,800,9807657654)
+except InvalidMarksError as a:
+    print("Invalid marks:",a)
+
 
 
