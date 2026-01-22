@@ -1,12 +1,17 @@
-class InvalidAgeError(Exception):
+class InvalidAgeError(ValueError):
     def __init__(self,age):
         self.age=age
         super().__init__(age)
 
-class InvalidMarksError(Exception):
+class InvalidMarksError(ValueError):
     def __init__(self,marks):
         self.marks=marks
         super().__init__(marks)  
+
+class InvalidContactError(ValueError):
+    def __init__(self,contact):
+        self.contact=contact
+        super().__init__(contact)
 
 class Student:
     college_name="LBEF-APU"
@@ -46,7 +51,7 @@ class Student:
             if len(newcontact)==10 and newcontact.isdigit():
                 self._contact=newcontact
             else:
-                raise ValueError("please enter a 10 digit number")
+                raise InvalidContactError(newcontact)
 
     @property
     def age(self):
@@ -109,5 +114,8 @@ try:
 except InvalidMarksError as a:
     print("Invalid marks:",a)
 
-
+try:
+    stu=Student(2,"Khushi","ratopul",19,80,980764)
+except InvalidContactError as k:
+    print("Invalid contact:",k)
 
