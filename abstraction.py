@@ -42,7 +42,11 @@ class Result:
         
 
     def is_passed(self):
-        return self.policy.is_passed(self.marks)
+        result= self.policy.is_passed(self.marks)
+        if not isinstance(result,bool):
+            raise TypeError("Policy must return bool")
+
+        return result
 
     @property
     def marks(self):
