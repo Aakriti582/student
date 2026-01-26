@@ -22,9 +22,14 @@ class PGResultPolicy(ResultPolicy):
     def is_passed(self,marks):
         return marks>=50
     
-class BrokenPolicy(ResultPolicy):
+
+class DiplomaResultPolicy(ResultPolicy):
     def is_passed(self,marks):
-        return "yes"
+        return marks>=35
+
+class PhDResultPolicy(ResultPolicy):
+    def is_passed(self,marks):
+        return marks>=60
 
 class Student:
     def __init__(self,id,name,age):
@@ -42,12 +47,8 @@ class Result:
         
 
     def is_passed(self):
-        result= self.policy.is_passed(self.marks)
-        if not isinstance(result,bool):
-            raise TypeError("Policy must return bool")
-
-        return result
-
+        return self.policy.is_passed(self.marks)
+       
     @property
     def marks(self):
         return self._marks
@@ -59,24 +60,23 @@ class Result:
         else:
             raise InvalidMarksError(newmarks)
 
-#composition here
-def check_result(result:Result):
-    return result.is_passed()
-
 stu=Student(1,"aakriti",19)
 res=Result(50,UGResultPolicy())
 print(res.is_passed())
-print(check_result(res))
 print()
 stu1=Student(2,"khushi",10)
 res1=Result(40,PGResultPolicy())
 print(res1.is_passed())
-print(check_result(res1))
 print()
-brstu=Student(3,"richha",11)
-res2=Result(30,BrokenPolicy())
+diplomastu=Student(3,"richha",11)
+res2=Result(35,DiplomaResultPolicy())
 print(res2.is_passed())
-print(check_result(res2))
+print()
+phdstu=Student(4,"susan",10)
+res3=Result(20,PhDResultPolicy())
+print(res3.is_passed())
+
+
 
 
 
